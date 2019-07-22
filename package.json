@@ -1,0 +1,27 @@
+{
+  "name": "hw-8-mysql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bamazon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bamazon.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Markpascua1012/HW-8-mysql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Markpascua1012/HW-8-mysql/issues"
+  },
+  "homepage": "https://github.com/Markpascua1012/HW-8-mysql#readme",
+  "devDependencies": {
+    "dotenv": "^8.0.0"
+  },
+  "dependencies": {
+    "inquirer": "^6.5.0",
+    "mysql": "^2.17.1"
+  }
+}

@@ -27,7 +27,7 @@ function displayAll() {
             console.log ("(" + res[i].id+ ")" + "(" + res[i].product_name + ")" + "(" + res[i].department_name + ")" + 
             "(" + res[i].price + ")" +"(" + res[i].stock_quantity + ")" + "\n");
         }
-        start(res);
+        start();
     });
 }
 
@@ -55,37 +55,50 @@ function start() {
                     type: "input",
                     message: "How many would you like to buy?"
                 }
-            ])
-            .then(function (answer) {
-                var chosenItem;
-                for (var i = 0; i < results.length; i++) {
-                    if (results[i].product_name === answer.choice) {
-                        chosenItem = results[i];
-                    }
-                }
-                if (chosenItem.stock_quantity < parseInt(answer.itemQuantity)) {
-                    connection.query(
-                        "UPDATE products SET ? WHERE ?",
-                        [
-                            {
-                                stock_quantity: parseInt(stock_quantity) - parseInt(answer.itemQuantity)
-                            },
-                            {
-                                product_name: chosenItem.product_name
-                            }
-                        ],
-                        function (error) {
-                            if (error) throw err;
-                            console.log("We're out of that! pick another item");
+            ]).then(function (answer) {
+                if ((results.stock_quantity - answer.itemQuantity) > 0) {
+                    connection.query("UPDATE products SET stock_quantity='" + (results.stock_quantity - answer.itemQuantity)
+                        + "' WHERE product_name='" + "'", function (err, res2) {
+                            console.log("Product Bought!");
                             displayAll();
-                        }
-                    );
-                }
-                else {
-                    
-                    console.log("your transaction was successful. you will be redirected to selection");
+                        })
+                } else {
+                    console.log("We're out of that!")
                     displayAll();
                 }
-            });
+            })
+            // .then(function (answer) {
+            //     var chosenItem;
+            //     for (var i = 0; i < results.length; i++) {
+            //         if (results[i].product_name === answer.choice) {
+            //             chosenItem = results[i];
+            //         }
+            //     }
+            //     if (chosenItem.stock_quantity < parseInt(answer.itemQuantity)) {
+            //         connection.query(
+            //             "UPDATE products SET ? WHERE ?",
+            //             [
+            //                 {
+            //                     stock_quantity: parseInt(stock_quantity) - parseInt(answer.itemQuantity)
+            //                 },
+            //                 {
+            //                     product_name: chosenItem.product_name
+            //                 }
+            //             ],
+            //             function (error) {
+            //                 if (error) throw err;
+            //                 console.log("We're out of that! pick another item");
+            //                 displayAll();
+            //             }
+            //         );
+            //     }
+            //     else {
+                    
+            //         console.log("your transaction was successful. you will be redirected to selection");
+            //         displayAll();
+            //     }
+            // });
+
+
     });
 }
